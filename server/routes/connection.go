@@ -12,14 +12,13 @@ import (
 
 func DBInstance() *mongo.Client {
 	MongoDb := "mongodb://localhost:27017/caloriesdb"
-
-	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
-	if err != nil {
-		log.Fatal(err)
-	}
+	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
+	opts := options.Client().ApplyURI(MongoDb).SetServerAPIOptions(serverAPI)
+	// changing some deprecated methods to new ones, hope they work
+	//	client, err := mongo.NewClient(options.Client().ApplyURI(MongoDb))
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	err = client.Connect(ctx)
+	client, err := mongo.Connect(ctx, opts)
 	if err != nil {
 		log.Fatal(err)
 	}
