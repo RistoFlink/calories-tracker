@@ -9,7 +9,7 @@ import (
 	"github.com/gin-conic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var entryCollection *mongo.Collection = openCollection(Client, "calories")
@@ -21,7 +21,7 @@ func GetEntries(c *gin.Context) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 	var entries []bson.M
-	cursor, err := entryCollection.Find(ctx, bson.M)
+	cursor, err := entryCollection.Find(ctx, bson.M{})
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -59,7 +59,7 @@ func DeleteEntry(c *gin.Context) {
 
 	result, err := entryCollection.DeleteOne(ctx, bson.M{"_id": docID})
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.h{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		fmt.Println(err)
 		return
 	}
