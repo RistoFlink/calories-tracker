@@ -85,7 +85,28 @@ func GetEntryById(c *gin.Context) {
 	c.JSON(http.StatusOK, entry)
 }
 
-func GetEntriesByIngredients(c *gin.Context) {}
+func GetEntriesByIngredients(c *gin.Context) {
+	ingredient := c.Params.ByName("id")
+	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	var entries []bson.M
+	cursor, err := entryCollection.Find(ctx, bson.M{"ingredients": ingredient})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
+
+	if err = cursor.All(ctx, &entries); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		fmt.Println(err)
+		return
+	}
+
+	defer cancel()
+	fmt.Println(entries)
+	c.JSON(http.StatusOK, entries)
+}
 
 func UpdateEntry(c *gin.Context) {
 	entryID := c.Params.ByName("id")
