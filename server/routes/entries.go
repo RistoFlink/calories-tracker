@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-conic/gin"
+	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -15,6 +15,7 @@ import (
 )
 
 var entryCollection *mongo.Collection = OpenCollection(Client, "calories")
+var validate = validator.New()
 
 // gin gives access to ID parameters
 func AddEntry(c *gin.Context) {
@@ -111,7 +112,6 @@ func GetEntriesByIngredients(c *gin.Context) {
 func UpdateEntry(c *gin.Context) {
 	entryID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(entryID)
-	var validate = validator.New()
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	var entry models.Entry
@@ -140,7 +140,7 @@ func UpdateEntry(c *gin.Context) {
 	c.JSON(http.StatusOK, result.ModifiedCount)
 }
 
-func UpgradeIngredient(c *gin.Context) {
+func UpdateIngredient(c *gin.Context) {
 	entryID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(entryID)
 

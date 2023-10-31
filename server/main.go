@@ -1,7 +1,7 @@
 package main
 
 import (
-	"calories-tracker/routes"
+	"calorie-tracker/routes"
 	"os"
 
 	"github.com/gin-contrib/cors"
