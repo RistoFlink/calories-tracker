@@ -44,7 +44,7 @@ const Entries = () => {
 					<Form.Label>Calories</Form.Label>
 					<Form.Control onChange={(event) => {newEntry.calories = event.target.value}}></Form.Control>
 					<Form.Label>Fat</Form.Label>
-					<Form.Control onChange={(event) => {newEntry.fat = event.target.value}}></Form.Control>
+					<Form.Control type='number' onChange={(event) => {newEntry.fat = event.target.value}}></Form.Control>
 				</Form.Group>
 				<Button onClick={() => addSingleEntry()}>Add</Button>
 				<Button onClick={() => setAddNewEntry(false)}>Cancel</Button>
@@ -64,6 +64,31 @@ const Entries = () => {
 				<Button onClick={() => changeIngredient()}>Change</Button>
 				<Button onClick={() => setChangeIngredient({"change": false, "id": 0})}>Cancel</Button>
 			</Modal.Body>
+
+		<Modal show={changeEntry.change} onHide={() => setChangeEntry({"change": false, "id": 0})} centered>
+			<Modal.Header closeButton>
+				<Modal.Title>Change entry</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Form.Group>
+					<Form.Label>Dish</Form.Label>
+					<Form.Control onChange={(event) => {newEntry.dish = event.target.value}}></Form.Control>
+					<Form.Label>Ingredients</Form.Label>
+					<Form.Control onChange={(event) => {newEntry.ingredients = event.target.value}}></Form.Control>
+					<Form.Label>Calories</Form.Label>
+					<Form.Control onChange={(event) => {newEntry.calories = event.target.value}}></Form.Control>
+					<Form.Label>Fat</Form.Label>
+					<Form.Control type='number' onChange={(event) => {newEntry.fat = event.target.value}}></Form.Control>
+				</Form.Group>
+				<Button onClick={() => changeEntry()}>Change</Button>
+				<Button onClick={() => setChangeEntry({"change": false, "id": 0})}>Cancel</Button>
+			</Modal.Body>
+
+
+
+
+
+		</Modal>
         </div>
     );
 
