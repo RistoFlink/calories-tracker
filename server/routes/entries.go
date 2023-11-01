@@ -143,6 +143,7 @@ func UpdateEntry(c *gin.Context) {
 func UpdateIngredient(c *gin.Context) {
 	entryID := c.Params.ByName("id")
 	docID, _ := primitive.ObjectIDFromHex(entryID)
+	fmt.Println(entryID)
 
 	type Ingredient struct {
 		Ingredients *string `json:"ingredients"`
@@ -160,6 +161,7 @@ func UpdateIngredient(c *gin.Context) {
 	result, err := entryCollection.UpdateOne(ctx, bson.M{"_id": docID},
 		bson.D{{"$set", bson.D{{"ingredients", ingredient.Ingredients}}}},
 	)
+	fmt.Println(result)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
