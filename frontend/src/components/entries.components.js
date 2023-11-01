@@ -50,6 +50,20 @@ const Entries = () => {
 				<Button onClick={() => setAddNewEntry(false)}>Cancel</Button>
 			</Modal.Body>
 			</Modal>
+			
+
+			<Modal show={changeIngredient.change} onHide={() => setChangeIngredient({"change": false, "id": 0})} centered></Modal>
+			<Modal.Header closeButton>
+				<Modal.Title>Change ingredients</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Form.Group>
+					<Form.Label>New ingredients</Form.Label>
+					<Form.Control onChange={(event) => {setNewIngredientName(event.target.value)}}></Form.Control>
+				</Form.Group>
+				<Button onClick={() => changeIngredient()}>Change</Button>
+				<Button onClick={() => setChangeIngredient({"change": false, "id": 0})}>Cancel</Button>
+			</Modal.Body>
         </div>
     );
 
